@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .smallbutton {
+            border: #19865C solid 3px;
+            border-radius: 10px;
+            background-color: #19865C;
+            color: white;
+            text-decoration: none;
+        }
+        .nav_bar {
+            background-color: #4f4f4f;
+            display: inline-block;
+            width: 100%;
+            height: 50px;
+        }
+        .nav_bar a {
+            color: white;
+            font-size: 15px;
+            margin: 1%;
+        }
+        .logo {
+            float: left;
+        }
+        .itemplus {
+            float: right;
+        }
+        .accountplus {
+            float: right;
+        }
+        .accountmanage {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="nav_bar">
+    <a class="logo" href="{% url 'article:list' %}">Inventory Manage</a>
+    <a class="accountmanage" href="{% url 'article:index_account' %}">거래처 관리</a>
+    <a class="accountplus" href="{% url 'article:create_account' %}">거래처 등록</a>
+    <a class="itemplus" href="{% url 'article:create'%}">상품 등록</a>
+</div>
+<h1>Item Detail</h1>
+<h3>상품 세부내용 페이지 입니다.</h3>
+<p>상품 이름: {{article.title}}</p>
+<p>상품 가격: {{article.price}}</p>
+<p>상품 설명: {{article.content}}</p>
+<p>거래처: {{article.account}}</p>
+<a class="smallbutton" href="{% url 'article:update' pk=article.pk %}">수정하기</a>
+<a class="smallbutton" href="{% url 'article:delete' pk=article.pk %}">삭제하기</a>
+<a class="smallbutton" href="{% url 'article:list' %}">목록으로</a>
+</body>
+</html>

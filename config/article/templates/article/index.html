@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지</title>
+    <style>
+        .nav_bar {
+            background-color: #4f4f4f;
+            display: inline-block;
+            width: 100%;
+            height: 50px;
+        }
+        .nav_bar a {
+            color: white;
+            font-size: 15px;
+            margin: 1%;
+        }
+        .logo {
+            float: left;
+        }
+        .itemplus {
+            float: right;
+        }
+        .accountplus {
+            float: right;
+        }
+        .accountmanage {
+            float: right;
+        }
+        .content_wrap {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+        .item_wrap{
+            display: inline-block;
+            margin: 0 auto;
+            width: 85%;
+        }
+        .item {
+            float: left;
+            padding: 5%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav_bar">
+    <a class="logo" href="{% url 'article:list' %}">Inventory Manage</a>
+    <a class="accountmanage" href="{% url 'article:index_account' %}">거래처 관리</a>
+    <a class="accountplus" href="{% url 'article:create_account' %}">거래처 등록</a>
+    <a class="itemplus" href="{% url 'article:create'%}">상품 등록</a>
+</div>
+
+</div>
+<div class="content_wrap">
+<h1>Item List</h1>
+<h3>상품 목록 페이지 입니다.</h3>
+    <br>
+    <hr>
+<div class="item_wrap">
+{% for article in articles %}
+    <div class="item">
+        <a href="{% url 'article:retrieve' pk=article.pk %}"><{{ article.title }}></a>
+        <p>가격: {{article.price}}</p>
+        <p>재고: {{article.amount}}</p>
+    </div>
+{% endfor %}
+</div>
+</div>
+</body>
+</html>
