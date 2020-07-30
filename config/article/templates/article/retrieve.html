@@ -49,6 +49,12 @@
 <p>상품 가격: {{article.price}}</p>
 <p>상품 설명: {{article.content}}</p>
 <p>거래처: {{article.account}}</p>
+<p>
+{% if article.photo %}
+
+<img src="{{article.photo.url}}" alt="">
+{% endif %}
+</p>
 <a class="smallbutton" href="{% url 'article:update' pk=article.pk %}">수정하기</a>
 <a class="smallbutton" href="{% url 'article:delete' pk=article.pk %}">삭제하기</a>
 <a class="smallbutton" href="{% url 'article:list' %}">목록으로</a>

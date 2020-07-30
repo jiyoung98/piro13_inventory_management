@@ -42,6 +42,26 @@
             padding: 5%;
         }
     </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        function clickButton (pk, status) {
+            console.log(pk); //확인용
+            console.log(status);
+            $.ajax({
+                type: "post",
+                url: "{% url 'article:amount_ajax' %}",
+                data: {"pk": pk, "status": status, "csrfmiddlewaretoken": "{{ csrf_token }}"},
+                success: function (response) {
+                    console.log("success");
+                    let a = document.getElementById(`amount-${pk}`);
+                    a.innerText = `재고: ${response.amount}`;
+                }, error: function (request, status, error) { // 통신 실패
+                    alert("fail");
+                },
+            })
+        }
+    </script>
 </head>
 <body>
 
@@ -62,8 +82,15 @@
 {% for article in articles %}
     <div class="item">
         <a href="{% url 'article:retrieve' pk=article.pk %}"><{{ article.title }}></a>
+        <p>
+        {% if article.photo %}
+        <img src="{{article.photo.url}}" alt="">
+        {% endif %}
+        </p>
         <p>가격: {{article.price}}</p>
-        <p>재고: {{article.amount}}</p>
+        <p id="amount-{{ article.pk }}">재고: {{article.amount}}</p>
+        <input type="submit" value="+" class="plusbutton" onclick="clickButton({{article.pk}},'plus')">
+        <input type="submit" value="-" class="minusbutton" onclick="clickButton({{article.pk}},'minus')">
     </div>
 {% endfor %}
 </div>

@@ -3,6 +3,8 @@ from .models import Article,Account
 from .forms import ItemForm
 from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, UpdateView
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 def index(request):
     queryset = Article.objects.all()
@@ -128,3 +130,23 @@ def delete_account(request, pk):
 
     url = reverse('article:index_account')
     return redirect(to=url)
+
+@require_POST
+def amount_ajax(request):
+    pk = request.POST.get("pk")
+    status = request.POST.get("status")
+    article = get_object_or_404(Article, pk=pk)
+
+    if status == "plus":
+        article.amount += 1
+    else:
+        if article.amount > 0:
+            article.amount -= 1
+        else:
+            url = reverse('article:list')
+            redirect(to=url)
+    article.save()
+    ctx = {
+        "amount": article.amount,
+    }
+    return JsonResponse(ctx)
